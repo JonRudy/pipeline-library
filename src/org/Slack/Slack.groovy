@@ -90,6 +90,7 @@ class Slack {
     else {
       def stage = [
         color: "#45B254",
+        "mrkdwn_in": ["author_name"],
         "author_name": "${name}: ${s}",
         "author_icon": "https://github.com/liatrio/pipeline-library/blob/rich-slack/resources/check-circle.png?raw=true"
       ]
