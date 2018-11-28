@@ -55,8 +55,7 @@ class Slack {
       attachments.add(Message.message.attachments[i])
     def stage = [
       color: "#cccc00",
-      "author_name": "${name}: running",
-      "author_icon": "https://github.com/liatrio/pipeline-library/blob/rich-slack/resources/pulsating-circle.gif?raw=true"
+      "text": ":in_progress: ${name}: running"
     ]
     attachments.add(stage)
     for (int i = stageNumber+1; i < pipelineSize; i++)
@@ -81,8 +80,7 @@ class Slack {
     if (s == null){
       def stage = [
         color: "#45B254",
-        "author_name": "${name}: passed!",
-        "author_icon": "https://github.com/liatrio/pipeline-library/blob/rich-slack/resources/check-circle.png?raw=true"
+        "text": ":passed: ${name}: passed!"
       ]
       attachments.add(stage)
     }
@@ -90,8 +88,7 @@ class Slack {
       def stage = [
         color: "#45B254",
         "mrkdwn_in": ["author_name"],
-        "author_name": "${name}: ${s}",
-        "author_icon": "https://github.com/liatrio/pipeline-library/blob/rich-slack/resources/check-circle.png?raw=true"
+        "text": ":passed: ${name}: ${s}"
       ]
       attachments.add(stage)
     }
@@ -112,10 +109,8 @@ class Slack {
       attachments.add(Message.message.attachments[i])
     def stage = [
       color: "danger",
-      "author_name": "${name}: failed",
-      "mrkdwn_in": ["text"],
-      "author_icon": "https://github.com/liatrio/pipeline-library/blob/rich-slack/resources/red-circle.png?raw=true",
-      "text": "```${log}```"
+      "text": ":failed: ${name}: failed```${log}```",
+      "mrkdwn_in": ["text"]
     ]
     attachments.add(stage)
     for (int i = stageNumber+1; i < pipelineSize; i++)
