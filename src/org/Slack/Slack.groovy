@@ -35,7 +35,7 @@ class Slack {
     for (int i = 0; i < body.stageNames.size(); i++){
       def stage = [
         color: "primary",
-        "text": ":not_started: ${body.stageNames[i]}: Not started",
+        "text": ":not_started: ${body.stageNames[i]}: Not started"
       ]
       attachments.add(stage)
     }
