@@ -9,7 +9,7 @@ def call(def Message, String s = null) {
   Message.message.attachments.eachWithIndex { attachment, index ->
     if (attachment.text != '' && attachment.text != null){
       def n = attachment.text.replaceAll(":in_progress: ", "")
-      def name = n.text.replaceAll(": running", "")
+      def name = n.replaceAll(": running", "")
       if ("${name}" == "${env.STAGE_NAME}"){
         def payload = slack.sendStageSuccess(Message, "${env.SLACK_ROOM}", name, Message.ts, index, Message.message.attachments.size(), s)
         def m = sh(returnStdout: true, script: "curl --silent -X POST -H 'Authorization: Bearer ${env.SLACK_TOKEN}' -H \"Content-Type: application/json\" --data \'${payload}\' ${env.SLACK_WEBHOOK_URL}/api/chat.update").trim() 
