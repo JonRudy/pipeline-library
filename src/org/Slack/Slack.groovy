@@ -35,9 +35,7 @@ class Slack {
     for (int i = 0; i < body.stageNames.size(); i++){
       def stage = [
         color: "primary",
-        "text": "${body.stageNames[i]}: Not started",
-        "author_name": "gndn",
-        "author_icon": "https://github.com/liatrio/pipeline-library/blob/rich-slack/resources/grey-circle.jpeg?raw=true"
+        "text": ":not_started: ${body.stageNames[i]}: Not started",
       ]
       attachments.add(stage)
     }
