@@ -12,7 +12,7 @@ class Slack {
   def sendPipelineInfo(body) {
     def attachments = []
     def pipelineTitle = [
-      title: "${body.jobName}, build #${body.buildNumber}",
+      title: "1 new commit to ${body.jobName}",
       title_link: "${body.title_link}",
       color: "primary",
       text: "build started by\n${body.author}",

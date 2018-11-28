@@ -15,11 +15,12 @@ def call() {
   
   def slackMessage = slack.sendPipelineInfo([
       slackURL: "${env.SLACK_WEBHOOK_URL}",
-      jobName: "${env.JOB_NAME}",
+      jobName: "${scm.getUserRemoteConfigs()[0].getUrl().tokenize('/')[4].split("\\.")[0]}",
       stageNames: stageNames,
       buildNumber: "${env.BUILD_NUMBER}",
       branch: "${env.BRANCH_NAME}",
-      title_link: "${env.BUILD_URL}",
+      //title_link: "${env.BUILD_URL}",
+      title_link: "${scm.getUserRemoteConfigs()[0].getUrl()}",
       author: "${author}",
       message: "${message}",
       channel: "${env.SLACK_ROOM}"
