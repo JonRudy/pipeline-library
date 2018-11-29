@@ -12,6 +12,7 @@ def call() {
   def commit = sh(returnStdout: true, script: 'git rev-parse HEAD')
   def author = sh(returnStdout: true, script: "git --no-pager show -s --format='%an' ${commit}").trim()
   def message = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim() 
+  def user = getSlackuser("${env.CHANGE_AUTHOR_EMAIL}")
   
   def slackMessage = slack.sendPipelineInfo([
       slackURL: "${env.SLACK_WEBHOOK_URL}",
@@ -23,7 +24,8 @@ def call() {
       title_link: "${scm.getUserRemoteConfigs()[0].getUrl()}",
       author: "${author}",
       message: "${message}",
-      channel: "${env.SLACK_ROOM}"
+      channel: "${env.SLACK_ROOM}",
+      user: "${user.user.name}"
     ])
   def response = sh(returnStdout: true, script: "curl --silent -X POST -H 'Authorization: Bearer ${env.SLACK_TOKEN}' -H \"Content-Type: application/json\" --data \'${slackMessage}\' ${env.SLACK_WEBHOOK_URL}/api/chat.postMessage").trim()
   def responseJSON = readJSON text: response  
