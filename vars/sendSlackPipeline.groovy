@@ -12,7 +12,7 @@ def call() {
   def commit = sh(returnStdout: true, script: 'git rev-parse HEAD')
   def author = sh(returnStdout: true, script: "git --no-pager show -s --format='%an' ${commit}").trim()
   def message = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim() 
-  def user = getSlackuser("${env.CHANGE_AUTHOR_EMAIL}")
+  def user = getSlackuser("${CHANGE_AUTHOR_EMAIL}")
   
   def slackMessage = slack.sendPipelineInfo([
       slackURL: "${env.SLACK_WEBHOOK_URL}",
