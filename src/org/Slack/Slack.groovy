@@ -115,7 +115,7 @@ class Slack {
       "author_name": "${name}: failed",
       "mrkdwn_in": ["text"],
       "author_icon": "https://github.com/liatrio/pipeline-library/blob/rich-slack/resources/red-circle.png?raw=true",
-      "text": "```${log}```"
+      "text": "${env.BUILD_URL}console\n```${log}```"
     ]
     attachments.add(stage)
     for (int i = stageNumber+1; i < pipelineSize; i++)
