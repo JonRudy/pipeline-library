@@ -6,7 +6,6 @@ import java.net.URLEncoder
 
 def call(Email) {
   sh "env"
-  echo Email
   def email = java.net.URLEncoder.encode(Email, "UTF-8")
   def param = "email=${email}"
   def m = sh(returnStdout: true, script: "curl --silent -X POST -H 'Authorization: Bearer ${env.SLACK_TOKEN}' -H \"Content-Type: application/x-www-form-urlencoded\" --data \'${param}\' ${env.SLACK_WEBHOOK_URL}/api/users.lookupByEmail").trim() 
