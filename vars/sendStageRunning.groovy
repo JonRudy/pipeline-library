@@ -14,6 +14,15 @@ def call(def Message) {
         def payload = slack.sendStageRunning(Message, "${env.SLACK_ROOM}", name, Message.ts, index, Message.message.attachments.size())
         def m = sh(returnStdout: true, script: "curl --silent -X POST -H 'Authorization: Bearer ${env.SLACK_TOKEN}' -H \"Content-Type: application/json\" --data \'${payload}\' ${env.SLACK_WEBHOOK_URL}/api/chat.update").trim() 
         def json = readJSON text: m
+        //def m = httpRequest validResponseCodes: '409,201,200', 
+        //          customHeaders: [[name: "Authorization", value: "Bearer ${env.SLACK_TOKEN}"]], 
+        //          consoleLogResponseBody: true, 
+        //          acceptType: 'APPLICATION_JSON', 
+        //          contentType: 'APPLICATION_JSON', 
+        //          httpMode: 'POST', 
+        //          requestBody: "${slackMessage}", 
+        //          url: "${env.SLACK_WEBHOOK_URL}/api/chat.postMessage"
+        //def json = readJSON text: m.content
         Message = json
       }
     }

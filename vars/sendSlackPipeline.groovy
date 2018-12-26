@@ -29,7 +29,16 @@ def call() {
       //user: "${user.user.name}"
     ])
   def response = sh(returnStdout: true, script: "curl --silent -X POST -H 'Authorization: Bearer ${env.SLACK_TOKEN}' -H \"Content-Type: application/json\" --data \'${slackMessage}\' ${env.SLACK_WEBHOOK_URL}/api/chat.postMessage").trim()
-  def responseJSON = readJSON text: response  
+  def responseJSON = readJSON text: response
+  //def response = httpRequest validResponseCodes: '409,201,200', 
+  //                  customHeaders: [[name: "Authorization", value: "Bearer ${env.SLACK_TOKEN}"]], 
+  //                  consoleLogResponseBody: true, 
+  //                  acceptType: 'APPLICATION_JSON', 
+  //                  contentType: 'APPLICATION_JSON', 
+  //                  httpMode: 'POST', 
+  //                  requestBody: "${slackMessage}", 
+  //                  url: "${env.SLACK_WEBHOOK_URL}/api/chat.postMessage"
+  //def responseJSON = readJSON text: response.content
   return responseJSON 
 }
 
