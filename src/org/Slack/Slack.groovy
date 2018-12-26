@@ -17,7 +17,8 @@ class Slack {
       color: "primary",
       text: "build started by\n${body.author}",
       "mrkdwn_in": ["fields"],
-      author_name: "{body.user}",
+      author_name: "${body.user.user.name}",
+      author_icon: "${body.user.user.profile.image_192}",
       fields: [
         [
           title: "Branch",

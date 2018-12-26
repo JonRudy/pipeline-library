@@ -25,7 +25,7 @@ def call() {
       author: "${author}",
       message: "${message}",
       channel: "${env.SLACK_ROOM}",
-      user: "${author}"
+      user: user
       //user: "${user.user.name}"
     ])
   def response = sh(returnStdout: true, script: "curl --silent -X POST -H 'Authorization: Bearer ${env.SLACK_TOKEN}' -H \"Content-Type: application/json\" --data \'${slackMessage}\' ${env.SLACK_WEBHOOK_URL}/api/chat.postMessage").trim()
