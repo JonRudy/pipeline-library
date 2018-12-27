@@ -15,7 +15,6 @@ class Slack {
       title: "1 new commit to ${body.jobName}",
       title_link: "${body.title_link}",
       color: "primary",
-      text: "build started by\n${body.author}",
       "mrkdwn_in": ["fields"],
       author_name: "${body.user.user.name}",
       author_icon: "${body.user.user.profile.image_192}",
