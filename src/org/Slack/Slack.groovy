@@ -50,6 +50,37 @@ class Slack {
 
   }
 
+  def sendStageSkipped(Message, channel, name, ts, stageNumber, pipelineSize, String s = null) {
+    def attachments = []
+    for (int i = 0; i < stageNumber; i++)
+      attachments.add(Message.message.attachments[i])
+
+    if (s == null){
+      def stage = [
+        color: "#5BA9EF",
+        "text": ":skipped: ${name}: skipped"
+      ]
+      attachments.add(stage)
+    }
+    else {
+      def stage = [
+        color: "#5BA9EF",
+        "text": ":skipped: ${name}: ${s}"
+      ]
+      attachments.add(stage)
+    }
+    for (int i = stageNumber+1; i < pipelineSize; i++)
+      attachments.add(Message.message.attachments[i])
+    def payload = JsonOutput.toJson([
+        ts: "${ts}",
+        channel: "${channel}",
+        username: "Jenkins",
+        as_user: true,
+        attachments: attachments
+    ])
+    return payload
+  }
+
   def sendStageRunning(Message, channel, name, ts, stageNumber, pipelineSize) {
     def attachments = []
     for (int i = 0; i < stageNumber; i++)
