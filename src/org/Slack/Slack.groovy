@@ -104,6 +104,38 @@ class Slack {
     return payload
   }
 
+  def sendStageInput(Message, channel, name, ts, stageNumber, pipelineSize, String s = null, id, buildURL) {
+    def attachments = []
+    def proceed = "${buildURL}input/${id}/proceedEmpty"
+    def abort = "${buildURL}input/${id}/abort"
+      def actions = [
+        [text: "Proceed", name: proceed, value: proceed, type: "button"],
+        [text: "Abort", name: abort, value: abort, type: "button"]
+      ]
+    for (int i = 0; i < stageNumber; i++)
+      attachments.add(Message.message.attachments[i])
+
+    if (s != null){
+      def stage = [
+        color: "#cccc00",
+        callback_id: "stage_callback",
+        "text": ":in_progress: ${name}: ${s}",
+        actions: actions
+      ]
+      attachments.add(stage)
+    }
+    for (int i = stageNumber+1; i < pipelineSize; i++)
+      attachments.add(Message.message.attachments[i])
+    def payload = JsonOutput.toJson([
+        ts: "${ts}",
+        channel: "${channel}",
+        username: "Jenkins",
+        as_user: true,
+        attachments: attachments
+    ])
+    return payload
+  }
+
   def sendStageSuccess(Message, channel, name, ts, stageNumber, pipelineSize, String s = null) {
     def attachments = []
     for (int i = 0; i < stageNumber; i++)
