@@ -87,6 +87,26 @@ class Slack {
     return payload
   }
 
+  def sendStageAbort(Message, channel, ts, buildURL) {
+    def attachments = []
+    attachments.add(Message.message.attachments[0])
+    def stage = [
+      color: "#cccc00",
+      "text": "<${buildURL}|Build has been aborted.>"
+    ]
+    attachments.add(stage)
+
+    def payload = JsonOutput.toJson([
+        ts: "${ts}",
+        channel: "${channel}",
+        username: "Jenkins",
+        as_user: true,
+        attachments: attachments
+    ])
+
+    return payload
+  }
+
   def sendStageRunning(Message, channel, name, ts, stageNumber, pipelineSize) {
     def attachments = []
     for (int i = 0; i < stageNumber; i++)
