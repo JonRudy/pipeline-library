@@ -11,6 +11,10 @@ class Slack {
 
   def sendPipelineInfo(body) {
     def attachments = []
+    def abort = "${body.buildURL}stop"
+    def actions = [
+      [text: "Abort", name: abort, value: abort, type: "button"]
+    ]
     def pipelineTitle = [
       title: "1 new commit to ${body.jobName}",
       title_link: "${body.title_link}",
@@ -18,6 +22,8 @@ class Slack {
       "mrkdwn_in": ["fields"],
       author_name: "${body.user.user.name}",
       author_icon: "${body.user.user.profile.image_192}",
+      callback_id: "stage_callback",
+      actions: actions,
       fields: [
         [
           title: "Branch",
@@ -108,10 +114,10 @@ class Slack {
     def attachments = []
     def proceed = "${buildURL}input/${id}/proceedEmpty"
     def abort = "${buildURL}input/${id}/abort"
-      def actions = [
-        [text: "Proceed", name: proceed, value: proceed, type: "button"],
-        [text: "Abort", name: abort, value: abort, type: "button"]
-      ]
+    def actions = [
+      [text: "Proceed", name: proceed, value: proceed, type: "button"],
+      [text: "Abort", name: abort, value: abort, type: "button"]
+    ]
     for (int i = 0; i < stageNumber; i++)
       attachments.add(Message.message.attachments[i])
 
