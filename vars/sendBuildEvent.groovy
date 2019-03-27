@@ -14,6 +14,8 @@ def call(requestParams) {
     requestParams.teamName = env.TEAM_NAME ? env.TEAM_NAME : env.ORG
     requestParams.appName = env.APP_NAME
     requestParams.branch = env.BRANCH_NAME
+    requestParams.groupID = env.GROUP_ID
+    requestParams.versionNumber = env.VERSION
 
     def requestBody = JsonOutput.toJson(requestParams)
     def url = env.elasticUrl ? env.elasticUrl : "localhost:9200"
