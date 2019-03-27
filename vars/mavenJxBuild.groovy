@@ -32,7 +32,9 @@ def call(params) {
             dir('charts/preview') {
                 sh "make preview"
                 sh "jx preview --app $APP_NAME --dir ../.."
+                sh "echo takumin 1"
                 env.APP_URL = sh returnStdout: true, script: 'jx get previews -c'
+                sh "echo takumin 2"
             }
             echo "url to sample app is: ${env.APP_URL}"
         //}
