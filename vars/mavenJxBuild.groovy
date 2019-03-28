@@ -28,6 +28,7 @@ def call(params) {
         sh "skaffold build -f skaffold.yaml"
         sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$VERSION"
         sh "echo hi jon"
+        sh 'env'
         if (env.BRANCH_NAME.contains("PR")) {
             dir('charts/preview') {
                 sh "make preview"
